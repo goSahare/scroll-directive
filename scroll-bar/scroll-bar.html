@@ -1,0 +1,8 @@
+<div class="scroll-bar">
+    <div class="drag-container">
+        <div class="scroll-drag"></div>
+    </div>
+    <div class="scroll-head" ng-click="scrollHeads($event,'top')"></div>
+    <div class="scroll-blocks" ng-repeat="block in scrollBlocks" ng-click="blockClick(block)"></div>
+    <div class="scroll-head" ng-click="scrollHeads($event,'bottom')"></div>
+</div>

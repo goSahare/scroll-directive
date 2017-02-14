@@ -1,0 +1,38 @@
+.scroll-bar {
+  right: 9%;
+  margin-top: 9.8%;
+  width: 5%;
+  position: absolute;
+  cursor: pointer;
+  z-index: 1;
+
+  .scroll-blocks {
+    background: red;
+    width: 50%;
+    height: 20%;
+  }
+
+  .drag-container {
+    margin-left: 50%;
+    margin-top: 90%;
+    width: 50%;
+    height: 80%;
+    position: absolute;
+    .scroll-drag {
+      width: 102%;                // To avoid little jittery effect
+      background: green;
+    }
+  }
+
+  .scroll-head {
+    width: 50%;
+    height: 10%;
+    background: yellow;
+    &:first-child {
+      //background:url()  image path here
+    }
+    &:last-child {
+      //background:url()  image path here
+    }
+  }
+}

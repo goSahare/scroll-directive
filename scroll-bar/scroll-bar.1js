@@ -1,0 +1,65 @@
+export default scrollBar;
+
+require('./scroll-bar.scss');
+
+function scrollBar() {
+    "use strict";
+
+    return {
+        restrict: 'E',
+        scope: {
+            parts: '=',
+            element: '='
+        },
+        template: require('./scroll-bar.html'),
+        link: function ($scope, $element) {
+
+            var blockLocation    = 0;
+            var Draggable        = require('Draggable');
+            var dragHeight       = 100 / $scope.parts;
+            var dragElement      = $('.scroll-drag');
+            var scrollElem       = $('.' + $scope.element);
+            var dragContainer    = $('.drag-container');
+            var incVal           = scrollElem.prop('scrollHeight');
+
+            $scope.scrollBlocks  = _.range(0, $scope.parts);
+
+            scrollElem.css({'overflow-y': 'hidden'});
+            dragElement.css({'height': dragHeight + '%'});
+            $('.scroll-bar').css('height',incVal+'px');
+
+            var options = {
+                setCursor: true,
+                limit: dragContainer[0],
+                onDrag:function(v){
+
+                    var top = parseInt($(v).css('top'),10);
+                }
+            };
+
+            new Draggable(dragElement[0], options);         // Initialize drag, element is draggable now;
+
+            scrollElem.scroll(function(){
+                console.log('scroll')
+            });
+
+            $scope.blockClick = function (block) {
+                blockLocation = block;
+                scrollElem.animate({scrollTop: (incVal * blockLocation + '%')}, 'slow');
+                dragElement.animate({'top': (dragHeight * blockLocation) + '%'}, 'slow');
+            };
+
+            $scope.scrollHeads = function (pos) {
+                if (pos == 'top') {
+                    blockLocation--;
+                } else {
+                    blockLocation++;
+                }
+                if (blockLocation < 0) blockLocation = 0;
+                if (blockLocation >= $scope.parts) blockLocation = ($scope.parts - 1);
+                scrollElem.animate({scrollTop: (blockLocation * incVal)}, 'slow');
+                dragElement.animate({top: (blockLocation * dragHeight) + '%'}, 'slow');
+            };
+        }
+    }
+}
